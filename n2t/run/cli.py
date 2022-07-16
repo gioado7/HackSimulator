@@ -10,7 +10,12 @@ cli = Typer(
 
 
 @cli.command("execute", no_args_is_help=True)
-def run_hack_simulator(hack_file_directory: str) -> None:
+def run_hack_simulator(hack_file_directory: str, cycles: int = 1000000) -> None:
     echo(f"Simulating {hack_file_directory}")
-    HackSimulator.load_from(hack_file_directory).simulate()
+    HackSimulator.load_from(hack_file_directory).simulate(cycles)
     echo("Done!")
+
+
+@cli.command("nothing", no_args_is_help=True)
+def run_nothing() -> None:
+    pass

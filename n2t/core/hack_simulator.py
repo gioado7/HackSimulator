@@ -17,5 +17,5 @@ class HackSimulator:
     def __init__(self) -> None:
         pass
 
-    def simulate(self) -> None:
-        HackProcessor(self.file_or_directory)
+    def simulate(self, num_cycles: int) -> None:
+        HackProcessor(self.file_or_directory, num_cycles)

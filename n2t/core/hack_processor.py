@@ -5,10 +5,12 @@ from n2t.core.specification import COMP_0, COMP_1, DEST, JUMP, NUM_REGISTERS
 
 
 class HackProcessor:
-    def __init__(self, file_path: Any) -> None:
+    def __init__(self, file_path: Any, num_cycles: int) -> None:
         # ROM
         file: Any = open(file_path, "r")
         self.lines: Any = file.readlines()
+        self.num_cycles: int = num_cycles
+
         # CPU
         self.ram: Any = [0] * NUM_REGISTERS
         self.a: int = 0
@@ -34,9 +36,9 @@ class HackProcessor:
         self.output_file.close()
 
     def simulate(self) -> None:
-        x = 0
-        while x < 1000000 and self.pc < len(self.lines):
-            x += 1
+        num_iterations = 0
+        while num_iterations < self.num_cycles and self.pc < len(self.lines):
+            num_iterations += 1
             self.process_instruction(self.lines[self.pc])
         self.write_result()
 
