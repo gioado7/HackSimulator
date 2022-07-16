@@ -55,65 +55,71 @@ class HackProcessor:
             dest: str = DEST[instruction[10:13]]
             jump: str = JUMP[instruction[13:16]]
             if jump == "NO":
-                if dest == "M":
-                    self.ram[self.a] = comp_value
-                    self.been[self.a] = True
-                elif dest == "D":
-                    self.d = comp_value
-                elif dest == "DM":
-                    self.d = comp_value
-                    self.ram[self.a] = comp_value
-                    self.been[self.a] = True
-                elif dest == "A":
-                    self.a = comp_value
-                elif dest == "AM":
-                    self.a = comp_value
-                    self.ram[self.a] = comp_value
-                    self.been[self.a] = True
-                elif dest == "AD":
-                    self.a = comp_value
-                    self.d = comp_value
-                elif dest == "ADM":
-                    self.a = comp_value
-                    self.d = comp_value
-                    self.ram[self.a] = comp_value
-                    self.been[self.a] = True
-                self.pc += 1
+                self.process_dest(dest, comp_value)
             else:
-                if jump == "JGT":
-                    if comp_value > 0:
-                        self.pc = self.a
-                    else:
-                        self.pc += 1
-                elif jump == "JEQ":
-                    if comp_value == 0:
-                        self.pc = self.a
-                    else:
-                        self.pc += 1
-                elif jump == "JGE":
-                    if comp_value >= 0:
-                        self.pc = self.a
-                    else:
-                        self.pc += 1
-                elif jump == "JLT":
-                    if comp_value < 0:
-                        self.pc = self.a
-                    else:
-                        self.pc += 1
-                elif jump == "JNE":
-                    if comp_value != 0:
-                        self.pc = self.a
-                    else:
-                        self.pc += 1
-                elif jump == "JLE":
-                    if comp_value <= 0:
-                        self.pc = self.a
-                    else:
-                        self.pc += 1
-                elif jump == "JMP":
-                    self.pc = self.a
-                else:
-                    self.pc += 1
+                self.process_jump(jump, comp_value)
+
+    def process_dest(self, dest: Any, comp_value: Any) -> None:
+        if dest == "M":
+            self.ram[self.a] = comp_value
+            self.been[self.a] = True
+        elif dest == "D":
+            self.d = comp_value
+        elif dest == "DM":
+            self.d = comp_value
+            self.ram[self.a] = comp_value
+            self.been[self.a] = True
+        elif dest == "A":
+            self.a = comp_value
+        elif dest == "AM":
+            self.a = comp_value
+            self.ram[self.a] = comp_value
+            self.been[self.a] = True
+        elif dest == "AD":
+            self.a = comp_value
+            self.d = comp_value
+        elif dest == "ADM":
+            self.a = comp_value
+            self.d = comp_value
+            self.ram[self.a] = comp_value
+            self.been[self.a] = True
+        self.pc += 1
+
+    def process_jump(self, jump: Any, comp_value: Any) -> None:
+        if jump == "JGT":
+            if comp_value > 0:
+                self.pc = self.a
+            else:
+                self.pc += 1
+        elif jump == "JEQ":
+            if comp_value == 0:
+                self.pc = self.a
+            else:
+                self.pc += 1
+        elif jump == "JGE":
+            if comp_value >= 0:
+                self.pc = self.a
+            else:
+                self.pc += 1
+        elif jump == "JLT":
+            if comp_value < 0:
+                self.pc = self.a
+            else:
+                self.pc += 1
+        elif jump == "JNE":
+            if comp_value != 0:
+                self.pc = self.a
+            else:
+                self.pc += 1
+        elif jump == "JLE":
+            if comp_value <= 0:
+                self.pc = self.a
+            else:
+                self.pc += 1
+        elif jump == "JMP":
+            self.pc = self.a
+        else:
+            self.pc += 1
 
     def get_comp_value(self, comp: str) -> Any:
         if comp == "0":
