@@ -1,7 +1,7 @@
 import os
 from typing import Any
 
-from n2t.core.rules import COMP_0, COMP_1, DEST, JUMP, NUM_REGISTERS
+from n2t.core.specification import COMP_0, COMP_1, DEST, JUMP, NUM_REGISTERS
 
 
 class HackProcessor:
@@ -10,13 +10,13 @@ class HackProcessor:
         file: Any = open(file_path, "r")
         self.lines: Any = file.readlines()
         # CPU
-        self.ram: [] = [0] * NUM_REGISTERS
+        self.ram: Any = [0] * NUM_REGISTERS
         self.a: int = 0
         self.d: int = 0
         self.pc: int = 0
 
         # output
-        self.output_file = None
+        self.output_file: Any = None
         self.open_output(file_path)
         self.simulate()
         self.close_output()
@@ -108,7 +108,7 @@ class HackProcessor:
                 else:
                     self.pc += 1
 
-    def get_comp_value(self, comp) -> int:
+    def get_comp_value(self, comp: str) -> Any:
         if comp == "0":
             return 0
         if comp == "1":
@@ -167,7 +167,8 @@ class HackProcessor:
             return self.d | self.ram[self.a]
 
     def write_result(self) -> None:
+        self.output_file.write("RAM  STATE\n")
+        self.output_file.write("----------\n")
         for i in range(0, NUM_REGISTERS):
             if self.ram[i] != 0:
-                print(i, end=":  ")
-                print(self.ram[i])
+                self.output_file.write(str(i) + ":  " + str(self.ram[i]) + "\n")
