@@ -1,7 +1,7 @@
 import os
 from typing import Any
 
-from n2t.core.specification import COMP_0, COMP_1, DEST, JUMP, NUM_REGISTERS
+from n2t.core.hack_specification import COMP_0, COMP_1, DEST, JUMP, NUM_REGISTERS
 
 
 class HackProcessor:
