@@ -6,10 +6,11 @@ from n2t.core.specification import COMP_0, COMP_1, DEST, JUMP, NUM_REGISTERS
 
 class HackProcessor:
     def __init__(self, file_path: Any, num_cycles: int) -> None:
-        # ROM
+        # ROM and helpers
         file: Any = open(file_path, "r")
         self.lines: Any = file.readlines()
         self.num_cycles: int = num_cycles
+        self.been: Any = [False] * NUM_REGISTERS
 
         # CPU
         self.ram: Any = [0] * NUM_REGISTERS
@@ -56,16 +57,19 @@ class HackProcessor:
             if jump == "NO":
                 if dest == "M":
                     self.ram[self.a] = comp_value
+                    self.been[self.a] = True
                 elif dest == "D":
                     self.d = comp_value
                 elif dest == "DM":
-                    self.ram[self.a] = comp_value
                     self.d = comp_value
+                    self.ram[self.a] = comp_value
+                    self.been[self.a] = True
                 elif dest == "A":
                     self.a = comp_value
                 elif dest == "AM":
                     self.a = comp_value
                     self.ram[self.a] = comp_value
+                    self.been[self.a] = True
                 elif dest == "AD":
                     self.a = comp_value
                     self.d = comp_value
@@ -73,6 +77,7 @@ class HackProcessor:
                     self.a = comp_value
                     self.d = comp_value
                     self.ram[self.a] = comp_value
+                    self.been[self.a] = True
                 self.pc += 1
             else:
                 if jump == "JGT":
@@ -172,5 +177,7 @@ class HackProcessor:
         self.output_file.write("RAM  STATE\n")
         self.output_file.write("----------\n")
         for i in range(0, NUM_REGISTERS):
-            if self.ram[i] != 0:
+            if self.been[i]:
                 self.output_file.write(str(i) + ":  " + str(self.ram[i]) + "\n")
+            else:
+                self.output_file.write(str(i) + ":  _" + "\n")
