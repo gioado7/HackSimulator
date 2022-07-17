@@ -5,7 +5,16 @@ import pytest
 
 from n2t.runner.cli import run_hack_simulator
 
-TEST_PROGRAMS = ["add", "FibonacciElement", "max", "NestedCall", "pong", "rect", "StaticsTest", "WorkAround"]
+TEST_PROGRAMS = [
+    "add",
+    "FibonacciElement",
+    "max",
+    "NestedCall",
+    "pong",
+    "rect",
+    "StaticsTest",
+    "WorkAround",
+]
 
 
 @pytest.mark.parametrize("program", TEST_PROGRAMS)
