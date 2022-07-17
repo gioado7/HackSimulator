@@ -118,8 +118,6 @@ class HackProcessor:
                 self.pc += 1
         elif jump == "JMP":
             self.pc = self.a
-        else:
-            self.pc += 1
 
     def get_comp_value(self, comp: str) -> Any:
         if comp == "0":
