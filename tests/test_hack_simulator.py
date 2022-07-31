@@ -11,6 +11,7 @@ TEST_PROGRAMS = [
     "max",
     "NestedCall",
     "pong",
+    "pong10000",
     "rect",
     "StaticsTest",
     "WorkAround",
@@ -21,7 +22,10 @@ TEST_PROGRAMS = [
 def test_should_simulate(program: str, hack_directory: Path) -> None:
     hack_file = str(hack_directory.joinpath(f"{program}.hack"))
 
-    run_hack_simulator(hack_file)
+    if program == "pong10000":
+        run_hack_simulator(hack_file, 10000)
+    else:
+        run_hack_simulator(hack_file)
 
     assert filecmp.cmp(
         shallow=False,

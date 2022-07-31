@@ -52,6 +52,11 @@ class HackProcessor:
             if instruction[3] == "1":
                 comp = COMP_1[instruction[4:10]]
             comp_value: int = self.get_comp_value(comp)
+            binary_comp_value: str = bin(comp_value).format(16)
+            print(binary_comp_value)
+            comp_value = int(binary_comp_value[len(binary_comp_value) - 15:len(binary_comp_value)], 2)
+            if binary_comp_value[len(binary_comp_value) - 16] == '0':
+                comp_value *= -1
             dest: str = DEST[instruction[10:13]]
             jump: str = JUMP[instruction[13:16]]
             if jump == "NO":
@@ -66,23 +71,23 @@ class HackProcessor:
         elif dest == "D":
             self.d = comp_value
         elif dest == "DM":
-            self.d = comp_value
             self.ram[self.a] = comp_value
             self.been[self.a] = True
+            self.d = comp_value
         elif dest == "A":
             self.a = comp_value
         elif dest == "AM":
-            self.a = comp_value
             self.ram[self.a] = comp_value
             self.been[self.a] = True
+            self.a = comp_value
         elif dest == "AD":
-            self.a = comp_value
             self.d = comp_value
+            self.a = comp_value
         elif dest == "ADM":
-            self.a = comp_value
-            self.d = comp_value
             self.ram[self.a] = comp_value
             self.been[self.a] = True
+            self.d = comp_value
+            self.a = comp_value
         self.pc += 1
 
     def process_jump(self, jump: Any, comp_value: Any) -> None:
