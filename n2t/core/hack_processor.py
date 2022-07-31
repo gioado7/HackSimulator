@@ -1,3 +1,4 @@
+import ctypes
 import os
 from typing import Any
 
@@ -52,11 +53,7 @@ class HackProcessor:
             if instruction[3] == "1":
                 comp = COMP_1[instruction[4:10]]
             comp_value: int = self.get_comp_value(comp)
-            binary_comp_value: str = bin(comp_value).format(16)
-            print(binary_comp_value)
-            comp_value = int(binary_comp_value[len(binary_comp_value) - 15:len(binary_comp_value)], 2)
-            if binary_comp_value[len(binary_comp_value) - 16] == '0':
-                comp_value *= -1
+            comp_value = ctypes.c_short(comp_value).value
             dest: str = DEST[instruction[10:13]]
             jump: str = JUMP[instruction[13:16]]
             if jump == "NO":
