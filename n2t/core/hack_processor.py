@@ -88,38 +88,22 @@ class HackProcessor:
         self.pc += 1
 
     def process_jump(self, jump: Any, comp_value: Any) -> None:
-        if jump == "JGT":
-            if comp_value > 0:
-                self.pc = self.a
-            else:
-                self.pc += 1
-        elif jump == "JEQ":
-            if comp_value == 0:
-                self.pc = self.a
-            else:
-                self.pc += 1
-        elif jump == "JGE":
-            if comp_value >= 0:
-                self.pc = self.a
-            else:
-                self.pc += 1
-        elif jump == "JLT":
-            if comp_value < 0:
-                self.pc = self.a
-            else:
-                self.pc += 1
-        elif jump == "JNE":
-            if comp_value != 0:
-                self.pc = self.a
-            else:
-                self.pc += 1
-        elif jump == "JLE":
-            if comp_value <= 0:
-                self.pc = self.a
-            else:
-                self.pc += 1
+        if jump == "JGT" and comp_value > 0:
+            self.pc = self.a
+        elif jump == "JEQ" and comp_value == 0:
+            self.pc = self.a
+        elif jump == "JGE" and comp_value >= 0:
+            self.pc = self.a
+        elif jump == "JLT" and comp_value < 0:
+            self.pc = self.a
+        elif jump == "JNE" and comp_value != 0:
+            self.pc = self.a
+        elif jump == "JLE" and comp_value <= 0:
+            self.pc = self.a
         elif jump == "JMP":
             self.pc = self.a
+        else:
+            self.pc += 1
 
     def get_comp_value(self, comp: str) -> Any:
         if comp == "0":
