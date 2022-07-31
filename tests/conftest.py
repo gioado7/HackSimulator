@@ -13,6 +13,6 @@ def hack_directory(pytestconfig: pytest.Config) -> Iterable[Path]:
     yield name
 
     # finally delete generated .out files
-    # files = str(name.joinpath("*.out"))
-    # for file in glob.glob(files):
-    #     os.remove(file)
+    files = str(name.joinpath("*.out"))
+    for file in glob.glob(files):
+        os.remove(file)
