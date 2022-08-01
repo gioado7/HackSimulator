@@ -166,6 +166,6 @@ class HackProcessor:
     def write_result(self) -> None:
         for i in range(0, NUM_REGISTERS):
             if self.been[i]:
-                self.output_file.write(str('{0:032b}'.format(self.ram[i])[16:]) + "\n")
+                self.output_file.write(str(self.ram[i]) + "\n")
             else:
                 self.output_file.write("\n")
